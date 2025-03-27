@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Pokémon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            padding: 20px;
+        }
+        .card {
+            background-color: #333;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            width: 300px;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Pokémon Generator</h1>
+    <button onclick="fetchPokemon()">Get Random Pokémon</button>
+    <div id="pokemon" class="card"></div>
+
+    <script>
+        async function fetchPokemon() {
+            const id = Math.floor(Math.random() * 150) + 1;
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+            const data = await response.json();
+            document.getElementById('pokemon').innerHTML = `
+                <h2>${data.name.toUpperCase()}</h2>
+                <img src="${data.sprites.front_default}" alt="${data.name}">
+                <p>Type: ${data.types.map(t => t.type.name).join(', ')}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
